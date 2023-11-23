@@ -1,3 +1,4 @@
+import { User } from '@prisma/client'
 import { CookieSerializeOptions } from 'cookie'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -32,3 +33,30 @@ export type NextApiHandlerWithUserId = (
 export type AuthGuardMiddleware = (
     handler: NextApiHandlerWithUserId
 ) => (req: NextApiRequestWithUserId, res: NextApiResponse) => void
+
+export type UserResponseData = {
+    user: Omit<User, 'password'>
+    accessToken: string
+}
+export type Block = {
+    id: number
+    imgSrc: string
+    imgAlt: string
+    title: string
+    description: string
+}
+
+export type Blocks = Block[]
+
+export type News = {
+    id: number
+    imgSrc: string
+    imgAlt: string
+    author: string
+    datePublished: string
+    title: string
+    description: string
+    text: string
+}
+
+export type NewsArr = News[]
