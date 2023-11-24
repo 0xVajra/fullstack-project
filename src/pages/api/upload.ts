@@ -3,7 +3,7 @@ import authGuard from '@/utils/authGuard'
 import prisma from '@/utils/prisma'
 import multer from 'multer'
 import { NextApiResponse } from 'next'
-import nc from 'next-connect'
+import { createRouter } from 'next-connect'
 
 const upload = multer({
     storage: multer.diskStorage({
@@ -12,12 +12,12 @@ const upload = multer({
     })
 })
 
-// @ts-ignore
-const uploadHandler = nc<
+const uploadHandler = createRouter<
     NextApiRequestWithUserId & { file?: Express.Multer.File },
     NextApiResponse
 >()
 
+//@ts-ignore
 uploadHandler.use(upload.single('avatar'))
 
 uploadHandler.post(async (req: NextApiRequestWithUserId & { file?: Express.Multer.File }, res: NextApiResponse) => {
@@ -46,7 +46,7 @@ uploadHandler.post(async (req: NextApiRequestWithUserId & { file?: Express.Multe
     }
 })
 
-export default authGuard(uploadHandler)
+export default authGuard(uploadHandler.handler())
 
 export const config = {
     api: {

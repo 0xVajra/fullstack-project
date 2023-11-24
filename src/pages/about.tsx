@@ -5,11 +5,9 @@ import type { NewsArr } from '@/types'
 import { Grid, Typography } from '@mui/material'
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 
-// компонент статической страницы
 export default function About({
   data
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  // данные новостных блоков
   const { news } = data
 
   return (
@@ -18,7 +16,6 @@ export default function About({
       <Typography variant='h4' textAlign='center' py={2}>
         About
       </Typography>
-      {/* блок с приветствием */}
       <Typography variant='body1'>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus,
         obcaecati necessitatibus! Doloremque numquam magni culpa atque omnis
@@ -35,9 +32,7 @@ export default function About({
       <Typography variant='h5' textAlign='center' py={2}>
         News
       </Typography>
-      {/* новостные блоки */}
-      {/* превью новости содержит ссылку на соответствующую страницу */}
-      <Grid container spacing={2} pb={2}>
+       <Grid container spacing={2} pb={2}>
         {news.map((n) => (
           <Grid item md={6} lg={4} key={n.id}>
             <Animate.FadeIn>
@@ -50,7 +45,6 @@ export default function About({
   )
 }
 
-// функция генерации статического контента с данными
 export async function getStaticProps(ctx: GetStaticPropsContext) {
   let data = {
     news: [] as NewsArr
@@ -77,8 +71,6 @@ export async function getStaticProps(ctx: GetStaticPropsContext) {
     props: {
       data
     },
-    // данная настройка включает инкрементальную регенерацию
-    // значением является время в секундах - 12 часов
-    revalidate: 60 * 60 * 12
+     revalidate: 60 * 60 * 12
   }
 }

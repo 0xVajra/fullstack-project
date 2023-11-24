@@ -4,10 +4,9 @@ import checkFields from '@/utils/checkFields'
 import prisma from '@/utils/prisma'
 import { Like } from '@prisma/client'
 import { NextApiResponse } from 'next'
-import nextConnect from 'next-connect'
+import { createRouter } from 'next-connect'
 
-// @ts-ignore
-const likeHandler = nextConnect<NextApiRequestWithUserId, NextApiResponse>()
+const likeHandler = createRouter<NextApiRequestWithUserId, NextApiResponse>()
 
 likeHandler.post(async (req: NextApiRequestWithUserId, res: NextApiResponse) => {
     const data = JSON.parse(req.body) as Pick<Like, 'postId'>
@@ -56,4 +55,4 @@ likeHandler.delete(async (req: NextApiRequestWithUserId, res: NextApiResponse) =
     }
 })
 
-export default authGuard(likeHandler)
+export default authGuard(likeHandler.handler())
